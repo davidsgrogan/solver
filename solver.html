@@ -1,0 +1,72 @@
+<html>
+<head>
+<script src="constraint_defs.js"></script>
+</head>
+<body>
+<script>
+
+var size = 4;
+var base = 1;
+var constraints = [
+  new SoloConstraint(4, 0),
+  new PlusConstraint(7, [1, 5]),
+  new SoloConstraint(1, 2),
+  new PlusConstraint(3, [3, 7]),
+  new SoloConstraint(2, 4),
+  new PlusConstraint(5, [6, 10]),
+  new PlusConstraint(4, [8, 12]),
+  new SoloConstraint(1, 9),
+  new PlusConstraint(7, [11, 15]),
+  new PlusConstraint(6, [13, 14]),
+];
+
+var solution = bt(new Solution(size, constraints));
+
+function reject(c) {
+  return c.CantBeSatisfied();
+}
+
+function accept(c) {
+  return c.IsSatisfied();
+}
+
+function MakeNext(c) {
+  return c.MakeNext();
+}
+
+function bt(c) {
+  if (c && reject(c)) {
+    return false;
+  }
+  if (c && accept(c)) {
+    return c;
+  }
+  var next = first(c);
+  while (next) {
+    if (bt(next))
+      return next;
+    next = MakeNext(next);
+  }
+}
+
+
+  function NextUnsetIndex() {
+    for (var i = 0; i < size * size; i++) {
+      if (this.solution[i] == 0) {
+        return i;
+      }
+    }
+  }
+  function IsComplete() {
+    for (var i = 0; i < size * size; i++) {
+      if (this.solution[i] == 0) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+
+</script>
+</body>
+</html>
