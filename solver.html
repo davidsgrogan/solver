@@ -22,6 +22,10 @@ var constraints = [
 
 var solution = bt(new Solution(size, constraints));
 
+function first(c) {
+  return c.First();
+}
+
 function reject(c) {
   return c.CantBeSatisfied();
 }
@@ -35,10 +39,10 @@ function MakeNext(c) {
 }
 
 function bt(c) {
-  if (c && reject(c)) {
+  if (reject(c)) {
     return false;
   }
-  if (c && accept(c)) {
+  if (accept(c)) {
     return c;
   }
   var next = first(c);
@@ -50,13 +54,6 @@ function bt(c) {
 }
 
 
-  function NextUnsetIndex() {
-    for (var i = 0; i < size * size; i++) {
-      if (this.solution[i] == 0) {
-        return i;
-      }
-    }
-  }
   function IsComplete() {
     for (var i = 0; i < size * size; i++) {
       if (this.solution[i] == 0) {

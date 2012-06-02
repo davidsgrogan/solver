@@ -2,6 +2,10 @@ function ResultsObject() {
   this.all_results = [];
 }
 
+function Constraint() {
+
+}
+
 // from plane:
 // write constraint validator and a test, return error or throw exception on
 // invalid set of constraints
@@ -15,6 +19,7 @@ function ResultsObject() {
 function SoloConstraint(pTarget, pIndex) {
 
 }
+SoloConstraint.prototype = new Constraint();
 
 function ArithmeticConstraint(pTarget, pIndices) {
   this._target = pTarget;
@@ -24,6 +29,7 @@ function ArithmeticConstraint(pTarget, pIndices) {
     return o.num_set == _indices.length && _target in o.all_results;
   }
 }
+ArithmeticConstraint.prototype = new Constraint();
 
 function PlusConstraint(target, indices) {
   ArithmeticConstraint.call(this, target, indices);
