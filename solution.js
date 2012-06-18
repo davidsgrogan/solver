@@ -7,6 +7,7 @@ function Solution(size, constraints) {
   this._constraints = constraints;
   this._current_index = -1;
   this._current_small_index = -1;
+  this._parent = false;
   Init();
 
   function Init() {
@@ -39,9 +40,19 @@ function Solution(size, constraints) {
     // Pick an index, remove all but one candidate.
     // Set small index to 0.
     // Return a copy.
+    var s = new Solution(that._size, that._constraints);
+    that._current_index++;
+    s._parent = that;
+    s._current_index = this._current_index;
+    s._current_small_index = 0;
+    var trying_first = s._available[this._current_index][0];
+    s._available[this._current_index] = new Array;
+    s._available.push(trying_first);
+    return s;
   }
   this.MakeNext = function() {
     // This doesn't have to be immutable, it's first that has to be
+    return false;
   }
   this.CantBeSatisfied = function() {
     for (var i = 0; i < that._constraints.length(); i++) {
